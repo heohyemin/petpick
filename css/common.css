@@ -49,7 +49,7 @@ body {
 /* 2. 헤더 - 아이콘 및 버튼 수직 정렬 정밀 수정 */
 header {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 12px 20px; background-color: var(--white);
+    padding: 14px 20px; background-color: var(--white);
     border-bottom: 1px solid var(--border-color);
     z-index: 10;
 }
@@ -180,7 +180,7 @@ nav.bottom-nav {
 .sub-page { position: absolute; top: 0; left: 0; width: 100%; height: calc(100% - 64px); background-color: var(--bg-light); z-index: 100; display: none; flex-direction: column; }
 .sub-page.active { display: flex; }
 
-.sub-header { background: var(--white); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); z-index: 20; }
+.sub-header { background: var(--white); padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); z-index: 20; }
 .sub-header-left { display: flex; align-items: center; gap: 12px; }
 .sub-header h2 { font-size: 17px; font-weight: 800; color: var(--primary-dark); }
 .back-btn { background: none; border: none; cursor: pointer; color: var(--primary-dark); display: flex; align-items: center; }
