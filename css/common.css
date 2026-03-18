@@ -27,7 +27,6 @@ body {
     background-color: #e0e0e0;
     display: flex; justify-content: center;
     overflow: hidden;
-    font-family: "Segoe UI Emoji", "Segoe UI Symbol", "Apple Color Emoji", "Noto Color Emoji", "Android Emoji", sans-serif;
 }
 
 .app-container {
