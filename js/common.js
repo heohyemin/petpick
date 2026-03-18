@@ -164,3 +164,27 @@ function openKakaoT() {
         }
     }, 1500);
 }
+
+// 페이지가 로드될 때 자동으로 실행되도록 설정
+window.addEventListener('load', function() {
+    updateTravelEmoji();
+});
+
+function updateTravelEmoji() {
+    const month = new Date().getMonth() + 1;
+    const travelIcon = document.getElementById('travelIcon');
+
+    if (travelIcon) {
+        let seasonEmoji = '🚗';
+        if (month >= 3 && month <= 5) {
+            seasonEmoji = '🌸';
+        } else if (month >= 6 && month <= 8) {
+            seasonEmoji = '🏖️';
+        } else if (month >= 9 && month <= 11) {
+            seasonEmoji = '🍂'; 
+        } else {
+            seasonEmoji = '❄️';
+        }
+        travelIcon.textContent = seasonEmoji;
+    }
+}
