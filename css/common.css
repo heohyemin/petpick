@@ -1,0 +1,283 @@
+:root {
+    --primary-dark: #262e3b;
+    --primary-yellow: #f0d400;
+    --bg-light: #f5f6f8;
+    --text-main: #333333;
+    --text-sub: #888888;
+    --border-color: #eeeeee;
+    --white: #ffffff;
+    --red-dot: #ff4d4f;
+    --star-yellow: #ffb400;
+    --heart-red: #ff4d4f;
+    --status-green: #4caf50;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
+
+* {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Pretendard', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: #e0e0e0;
+    display: flex; justify-content: center;
+    overflow: hidden;
+}
+
+.app-container {
+    width: 100%; max-width: 480px; height: 100vh;
+    background-color: var(--white);
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+/* 1. 스플래시 화면 */
+.splash-screen {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: var(--primary-dark); color: var(--primary-yellow);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 9999; transition: opacity 0.5s, visibility 0.5s;
+}
+.splash-screen.hidden { opacity: 0; visibility: hidden; }
+
+/* 2. 헤더 - 아이콘 및 버튼 수직 정렬 정밀 수정 */
+header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 20px; background-color: var(--white);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 10;
+}
+.location-btn {
+    font-size: 16px; font-weight: 800; background: none; border: none; 
+    cursor: pointer; color: var(--primary-dark); display: flex; align-items: center; gap: 4px;
+}
+.header-right { 
+    display: flex; align-items: center; gap: 12px;
+    flex-shrink: 0;
+}
+.event-btn {
+    background-color: var(--primary-dark); color: var(--white); border: none;
+    border-radius: 100px; padding: 0 12px; font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; gap: 4px; cursor: pointer; height: 32px;
+    white-space: nowrap;
+}
+.event-btn .material-symbols-outlined { font-size: 16px; color: var(--primary-yellow); }
+
+.bell-btn { 
+    background: none; border: none; cursor: pointer; color: var(--primary-dark); 
+    display: flex; align-items: center; justify-content: center;
+    width: 24px; height: 32px; /* 높이를 이벤트 버튼과 맞춤 */
+}
+.bell-btn .material-symbols-outlined { font-size: 24px; }
+
+/* 3. 메인 콘텐츠 */
+main { flex: 1; overflow-y: auto; background-color: var(--bg-light); padding-bottom: 80px; }
+
+/* 검색바 */
+.search-wrap { padding: 16px 20px 8px; }
+.search-box {
+    display: flex; align-items: center; background-color: var(--white);
+    border: 1px solid var(--border-color); border-radius: 12px; padding: 12px 16px; gap: 8px;
+}
+.search-box input { flex: 1; border: none; outline: none; font-size: 15px; }
+
+/* 반려동물 프로필 */
+.pet-profiles-wrapper {
+    display: flex; overflow-x: auto; gap: 12px; padding: 16px 20px 20px;
+    scroll-snap-type: x mandatory;
+}
+.pet-profiles-wrapper::-webkit-scrollbar { display: none; }
+.pet-card {
+    min-width: 82%; background-color: var(--white);
+    padding: 20px; border-radius: 16px; 
+    display: flex; align-items: center; gap: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    scroll-snap-align: center; transition: all 0.4s ease;
+    cursor: pointer;
+}
+.pet-card.active-pet { background-color: var(--primary-yellow); }
+.pet-thumb-wrap { position: relative; width: 64px; height: 64px; }
+.pet-img { width: 100%; height: 100%; border-radius: 50%; background: #eee; border: 2px solid white; object-fit: cover; }
+.bday-hat-icon { position: absolute; top: -15px; width: 32px; height: 32px; z-index: 5; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15)); animation: bounceHat 2s ease-in-out infinite; }
+@keyframes bounceHat { 0%, 100% { transform: rotate(327deg) scale(1); } 50% { transform: rotate(343deg) scale(1.1); } }
+
+.pet-info h2 { font-size: 18px; font-weight: 800; }
+.pet-info p { font-size: 13px; font-weight: 600; opacity: 0.8; margin-top: 2px; }
+
+/* 액션 버튼 섹션 */
+.actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 0 20px 20px; }
+.action-btn {
+    background: var(--white); border-radius: 12px; padding: 12px 0; text-align: center; 
+    font-size: 11px; font-weight: 700; border: 1px solid var(--border-color); 
+    cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+/* 홈 광고 배너존 - 17/13 유지 */
+.ad-slider-container {
+    margin: 0 20px 24px 20px; position: relative; overflow: hidden; border-radius: 16px;
+    height: 90px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.ad-slider-wrapper { display: flex; width: 300%; height: 100%; transition: transform 0.4s ease-in-out; }
+.ad-slide { width: 33.333%; height: 100%; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; position: relative; cursor: pointer; }
+.ad-slide:nth-child(1) { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+.ad-slide:nth-child(2) { background: linear-gradient(135deg, #f0d400 0%, #ffe866 100%); }
+.ad-slide:nth-child(3) { background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); }
+.home-ad-badge { position: absolute; top: 10px; right: 10px; background: rgba(255, 255, 255, 0.5); color: var(--primary-dark); font-size: 9px; font-weight: 800; padding: 2px 5px; border-radius: 5px; }
+
+.home-ad-text h3 { font-size: 17px; font-weight: 800; color: var(--primary-dark); margin-bottom: 2px; }
+.home-ad-text p { font-size: 13px; color: rgba(38, 46, 59, 0.7); font-weight: 600; }
+
+.ad-dots { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; }
+.dot { width: 4px; height: 4px; background: rgba(255, 255, 255, 0.5); border-radius: 50%; }
+.dot.active { background: var(--primary-dark); width: 10px; border-radius: 10px; }
+
+/* 카테고리 그리드 */
+.category-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 20px 24px; }
+.cat-item { background: var(--white); border-radius: 16px; padding: 12px 4px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.02); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.cat-icon { font-size: 26px; display: block; margin-bottom: 6px; }
+.cat-name { font-size: 12px; font-weight: 700; color: var(--text-main); white-space: nowrap; }
+
+/* 추천 리스트 카드 */
+.section-title { padding: 0 20px 12px; font-size: 16px; font-weight: 700; color: var(--primary-dark); display: flex; justify-content: space-between; align-items: center; }
+.refresh-btn { font-size: 12px; font-weight: 500; color: var(--text-sub); cursor: pointer; display: flex; align-items: center; justify-content: center; /*width: 30px; height: 30px; border-radius: 50%; background: #eee;*/ }
+
+.hospital-list { padding: 0 20px; }
+.card { background: var(--white); padding: 16px; border-radius: 20px; display: flex; gap: 14px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); position: relative; cursor: pointer; }
+.card-img { width: 80px; height: 80px; border-radius: 14px; background: #eee; flex-shrink: 0; }
+.card-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+.status-badge { font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 4px; width: fit-content; display: flex; align-items: center; justify-content: center; /*margin-bottom: 4px;*/ }
+.status-badge.open { background-color: rgba(76, 175, 80, 0.1); color: var(--status-green); }
+.status-badge.closed { background-color: #f5f5f5; color: var(--text-sub); }
+
+.card-title { font-size: 15px; font-weight: 700; margin-bottom: 2px; padding-right: 24px; margin-top:5px; }
+.card-desc { font-size: 12px; color: var(--text-sub); margin-bottom: 4px; }
+.card-rating { font-size: 12px; color: var(--text-main); font-weight: 700; display: flex; align-items: center; gap: 2px; }
+.star-icon { font-size: 16px; color: var(--star-yellow); font-variation-settings: 'FILL' 1; }
+.favorite-btn { position: absolute; top: 14px; right: 14px; background: none; border: none; cursor: pointer; color: #ddd; transition: 0.2s; z-index: 5; }
+.favorite-btn.active { color: var(--heart-red); font-variation-settings: 'FILL' 1; }
+
+/* 하단 네비게이션 - 항상 위 고정 */
+nav.bottom-nav { 
+    position: absolute; bottom: 0; width: 100%; height: 64px; 
+    background: var(--white); display: flex; justify-content: space-around; align-items: center; 
+    border-top: 1px solid var(--border-color); padding-bottom: env(safe-area-inset-bottom); 
+    z-index: 1000;
+}
+.nav-item { display: flex; flex-direction: column; align-items: center; color: #bbb; font-size: 10px; cursor: pointer; flex: 1; gap: 2px; }
+.nav-item.active { color: var(--primary-dark); font-weight: 700; }
+.nav-item.active .material-symbols-outlined { font-variation-settings: 'FILL' 1; }
+
+/* ========================================= 
+   서브 페이지 및 상세 정보 시스템
+   ========================================= */
+.sub-page { position: absolute; top: 0; left: 0; width: 100%; height: calc(100% - 64px); background-color: var(--bg-light); z-index: 100; display: none; flex-direction: column; }
+.sub-page.active { display: flex; }
+
+.sub-header { background: var(--white); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); z-index: 20; }
+.sub-header-left { display: flex; align-items: center; gap: 12px; }
+.sub-header h2 { font-size: 17px; font-weight: 800; color: var(--primary-dark); }
+.back-btn { background: none; border: none; cursor: pointer; color: var(--primary-dark); display: flex; align-items: center; }
+
+.sub-content { flex: 1; overflow-y: auto; padding: 20px; position: relative; }
+
+/* 상세 정보 디자인 - 뱃지 정렬 수정 */
+.hospital-detail-hero { width: 100%; height: 200px; background: #ddd; border-radius: 16px; margin-bottom: 20px; }
+.hospital-info-box { background: var(--white); border-radius: 16px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); margin-bottom: 16px; }
+
+.detail-badge-group { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; align-items: center; }
+.category-badge, .hotel-badge, .status-badge { 
+    font-size: 10px; font-weight: 800; padding: 0 8px; border-radius: 4px; height: 22px; 
+    display: inline-flex; align-items: center; justify-content: center;
+}
+.category-badge { background: #f0f4f8; color: var(--primary-dark); }
+.hotel-badge { background: #fff3e0; color: #ff9800; }
+
+.hospital-detail-title { font-size: 22px; font-weight: 800; margin-bottom: 8px; color: var(--primary-dark); }
+.hospital-detail-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 13px; }
+
+.info-list { text-align: left; list-style: none; }
+.info-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--bg-light); font-size: 14px; }
+.info-label { color: var(--text-sub); font-weight: 600; min-width: 60px; }
+
+/* 주소 및 복사 버튼 디자인 정밀화 */
+.info-value-wrap { 
+    flex: 1; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; 
+    max-width: 75%; 
+}
+.info-value { color: var(--text-main); font-weight: 700; text-align: right; word-break: keep-all; line-height: 1.4; }
+
+/* 복사 버튼 디자인 */
+.copy-btn { 
+    background: #f0f4f8; border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 8px; 
+    font-size: 11px; font-weight: 700; color: var(--primary-dark); cursor: pointer; 
+    display: flex; align-items: center; gap: 4px;
+}
+
+.link-group { display: flex; gap: 8px; justify-content: flex-end; }
+.link-icon-btn { 
+    display: flex; align-items: center; gap: 4px; padding: 5px 10px;
+    background: #f0f4f8; border-radius: 8px; color: var(--primary-dark); 
+    font-weight: 700; text-decoration: none; font-size: 11px;
+}
+.link-icon-btn .material-symbols-outlined { font-size: 16px; }
+
+.detail-action-bar { 
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin:24px 0 0 0;
+    background: var(--white); position: sticky; bottom: 0; z-index: 50;
+    /* box-shadow: none; border-top: 1px solid var(--border-color); */
+}
+.detail-action-btn { padding: 14px; border-radius: 12px; border: none; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+/* 지도 박스 디자인 */
+.map-area { 
+    width: 100%; height: 160px; background-color: #f5f6f8; border-radius: 16px; 
+    margin-top: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+    color: #bbb; font-size: 13px; gap: 10px; border: 1px dashed #ddd; 
+}
+
+/* 방문자 리뷰 섹션 */
+.review-section { margin-top: 30px; }
+.review-header { font-weight: 800; font-size: 16px; margin-bottom: 16px; color: var(--primary-dark); }
+.review-card { 
+    background: var(--white); padding: 16px; border-radius: 16px; margin-bottom: 12px; 
+    border: 1px solid var(--border-color); box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+}
+.review-user { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.user-name { font-weight: 800; font-size: 14px; color: var(--primary-dark); }
+.review-content { font-size: 13px; color: #555; line-height: 1.6; }
+
+/* 나의 예약 탭 */
+.sub-tabs { display: flex; background: var(--white); border-bottom: 1px solid var(--border-color); }
+.sub-tab-item { flex: 1; text-align: center; padding: 14px 0; font-size: 14px; font-weight: 700; color: #bbb; cursor: pointer; position: relative; }
+.sub-tab-item.active { color: var(--primary-dark); }
+.sub-tab-item.active::after { content: ''; position: absolute; bottom: 0; left: 20%; width: 60%; height: 3px; background: var(--primary-yellow); border-radius: 10px; }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.list-item { background: var(--white); padding: 16px; border-radius: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+.list-item-info h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.list-item-info p { font-size: 12px; color: var(--text-sub); }
+
+/* 반려동물 정보 수정 모드 */
+.pet-detail-card { background: var(--white); border-radius: 24px; padding: 32px 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; }
+.detail-pet-img { width: 100px; height: 100px; border-radius: 35px; border: 4px solid var(--primary-yellow); margin-bottom: 20px; object-fit: cover; }
+.edit-input { width: 60%; padding: 6px 12px; border: 1px solid var(--primary-yellow); border-radius: 8px; font-size: 14px; text-align: right; outline: none; background: #fff; }
+.hidden-mode { display: none; }
+
+/* 모달 오버레이 */
+.modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1500; display: none; align-items: flex-end; }
+.modal-overlay.active { display: flex; }
+.modal-content { width: 100%; height: 50%; background-color: white; border-top-left-radius: 20px; border-top-right-radius: 20px; display: flex; flex-direction: column; animation: slideUp 0.3s ease-out; }
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+/* 토스트 */
+.toast { position: absolute; bottom: -100px; left: 50%; transform: translateX(-50%); background: rgba(38, 46, 59, 0.9); color: white; padding: 12px 24px; border-radius: 30px; font-size: 13px; transition: 0.3s; z-index: 2000; white-space: nowrap; pointer-events: none; }
+.toast.show { bottom: 80px; }

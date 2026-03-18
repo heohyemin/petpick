@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>펫픽 - 반려동물 플랫폼</title>
+
+<!-- 폰트: 프리텐다드 -->
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<!-- 아이콘: Google Material Symbols -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<link rel="stylesheet" href="/css/common.css" />
+<script src="/js/common.js"></script>
+
+</head>
+
+<body>
+
+<!-- 스플래시 화면 -->
+<div class="splash-screen" id="splashScreen">
+    <div style="font-size: 40px; margin-bottom: 10px;">🐾</div>
+    <div style="font-weight: 800; font-size: 24px;">펫스팟</div>
+</div>
+
+<div class="app-container">
+    <!-- 헤더 -->
+    <header id="mainHeader">
+        <button class="location-btn" onclick="openModal('locationModal')">
+            <span id="locDisplay">강남구 역삼동</span>
+            <span class="arrow-icon">▾</span>
+        </button>
+        <div class="header-right">
+            <button class="event-btn" onclick="showToast('이벤트 페이지')"><span class="material-symbols-outlined">redeem</span> 이벤트</button>
+            <button class="bell-btn" onclick="showToast('알림 내역 없음')"><span class="material-symbols-outlined">notifications</span></button>
+        </div>
+    </header>
+
+    <!-- 메인 홈 -->
+    <main id="mainHome">
+        <section class="search-wrap">
+            <div class="search-box"><span class="material-symbols-outlined">search</span><input type="text" placeholder="병원, 미용, 호텔 등 검색"></div>
+        </section>
+
+        <!-- 반려동물 프로필 -->
+        <section class="pet-profiles-wrapper drag-scrollable" id="petScrollArea">
+            <div class="pet-card active-pet" onclick="openPetDetail('choco')">
+                <div class="pet-thumb-wrap">
+                    <div class="bday-hat-icon">
+                        <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 15L85 85H15L50 15Z" fill="#FF6BCB" stroke="#262E3B" stroke-width="2" stroke-linejoin="round"/>
+                            <circle cx="50" cy="45" r="4" fill="#F0D400" /><circle cx="40" cy="65" r="4" fill="#F0D400" /><circle cx="60" cy="65" r="4" fill="#F0D400" /><circle cx="50" cy="80" r="3" fill="#F0D400" />
+                            <circle cx="50" cy="15" r="7" fill="#F0D400" stroke="#262E3B" stroke-width="2"/><path d="M15 85C20 80 25 80 30 85C35 90 40 90 45 85C50 80 55 80 60 85C65 90 70 90 75 85C80 80 85 80 90 85" stroke="#262E3B" stroke-width="2" stroke-linecap="round"/>
+                            <rect x="10" y="30" width="4" height="4" transform="rotate(45 10 30)" fill="#FFD700" /><circle cx="85" cy="40" r="2.5" fill="#00C4FF" /><rect x="75" y="20" width="3" height="6" transform="rotate(-20 75 20)" fill="#FF4D4F" />
+                        </svg>
+                    </div>
+                    <div class="pet-img" id="img-choco" style="background: url('https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=100') center/cover;"></div>
+                </div>
+                <div class="pet-info"><h2 id="name-choco">초코</h2><p>다음 미용까지 D-3 ✂️</p></div>
+            </div>
+            <div class="pet-card" onclick="openPetDetail('nabi')">
+                <div class="pet-thumb-wrap"><div class="pet-img" id="img-nabi" style="background: url('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=100') center/cover;"></div></div>
+                <div class="pet-info"><h2 id="name-nabi">나비</h2><p>정기 검진까지 D-14 🏥</p></div>
+            </div>
+        </section>
+
+        <!-- 액션 버튼 -->
+        <section class="actions">
+            <div class="action-btn" onclick="showToast('24시 병원 리스트')">24시 병원</div>
+            <div class="action-btn" onclick="showToast('당일 예약 리스트')">당일예약</div>
+            <div class="action-btn" onclick="openMyBookings()">나의예약</div>
+            <div class="action-btn" onclick="openStandaloneFavorite()">즐겨찾기</div>
+        </section>
+
+        <!-- 광고 배너 -->
+        <section class="ad-slider-container" id="adSliderContainer">
+            <div class="ad-slider-wrapper" id="adSlider">
+                <div class="ad-slide" onclick="showToast('기획전')"><div class="home-ad-badge">AD</div><div class="home-ad-text"><h3>봄맞이 펫웨어 기획전🌸</h3><p>최대 50% 할인 쿠폰!</p></div><div style="font-size: 28px;">👕</div></div>
+                <div class="ad-slide" onclick="showToast('쿠폰')"><div class="home-ad-badge">AD</div><div class="home-ad-text"><h3>신규 가입 5,000원 쿠폰🎁</h3><p>첫 쇼핑 즉시 사용 혜택</p></div><div style="font-size: 28px;">💰</div></div>
+                <div class="ad-slide" onclick="showToast('검진')"><div class="home-ad-badge">AD</div><div class="home-ad-text"><h3>건강검진 패키지🏥</h3><p>전국 병원 할인 예약</p></div><div style="font-size: 28px;">🩺</div></div>
+            </div>
+            <div class="ad-dots" id="adDots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+        </section>
+
+        <!-- 카테고리 -->
+        <section class="category-grid">
+            <div class="cat-item" onclick="showToast('동물병원')"><span class="cat-icon">🏥</span><span class="cat-name">병원</span></div>
+            <div class="cat-item" onclick="showToast('미용')"><span class="cat-icon">✂️</span><span class="cat-name">미용</span></div>
+            <div class="cat-item" onclick="showToast('호텔')"><span class="cat-icon">🏨</span><span class="cat-name">호텔</span></div>
+            <div class="cat-item" onclick="showToast('유치원')"><span class="cat-icon">🏫</span><span class="cat-name">유치원</span></div>
+            <div class="cat-item" onclick="showToast('여행')"><span class="cat-icon">🚗</span><span class="cat-name">여행</span></div>
+            <div class="cat-item" onclick="showToast('장례')"><span class="cat-icon">🕯️</span><span class="cat-name">장례</span></div>
+        </section>
+
+        <div class="section-title"><span>주변 추천 플레이스 🐾</span><span class="refresh-btn" onclick="renderHospitals()"><!--<span class="material-symbols-outlined">refresh</span>-->새로고침</span></div>
+        <section class="hospital-list" id="hospitalContainer"></section>
+    </main>
+
+    <!-- 서브 페이지: 장소 상세 -->
+    <section id="page-hospital-detail" class="sub-page">
+        <div class="sub-header">
+            <div class="sub-header-left"><button class="back-btn" onclick="closeSubPage()"><span class="material-symbols-outlined">arrow_back</span></button><h2>상세정보</h2></div>
+            <button class="favorite-btn active" style="position:static; padding-right:10px; background:none; border:none; color:var(--heart-red);"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">favorite</span></button>
+        </div>
+        <div class="sub-content">
+            <div class="hospital-detail-hero" id="detail-h-img"></div>
+            <div class="hospital-info-box">
+                <!-- 뱃지 그룹 -->
+                <div class="detail-badge-group">
+                    <span class="category-badge" id="detail-h-category"></span>
+                    <span class="hotel-badge" id="detail-h-hotel" style="display:none;">🏠 호텔</span>
+                    <div id="detail-h-status-badge" class="status-badge"><span id="detail-h-status-text"></span></div>
+                </div>
+                <h3 class="hospital-detail-title" id="detail-h-name"></h3>
+                <div class="hospital-detail-meta"><span style="color:var(--star-yellow); display:flex; align-items:center; gap:2px; font-weight:700;"><span class="material-symbols-outlined" style="font-size:16px; font-variation-settings:'FILL' 1;">star</span><span id="detail-h-rating"></span></span><span style="color:#ccc;">|</span><span id="detail-h-reviews"></span><span style="color:#ccc;">|</span><span id="detail-h-distance"></span></div>
+                
+                <div style="padding: 14px 0; border-top: 1px solid var(--bg-light);"><p style="font-weight:700; margin-bottom:4px; font-size:14px;">상세 소개</p><p id="detail-h-desc" style="color:var(--text-sub); font-size:13px; line-height:1.6;"></p></div>
+                
+                <ul class="info-list" style="border-top: 1px solid var(--bg-light); padding-top:10px;">
+                    <li class="info-item">
+                        <span class="info-label">주소</span>
+                        <div class="info-value-wrap">
+                            <span class="info-value" id="detail-h-addr"></span>
+                            <button class="copy-btn" onclick="copyAddress()">
+                                <span class="material-symbols-outlined" style="font-size:14px;">content_copy</span> 복사
+                            </button>
+                        </div>
+                    </li>
+                    <li class="info-item"><span class="info-label">영업시간</span><span class="info-value" id="detail-h-time"></span></li>
+                    <li class="info-item"><span class="info-label">휴무일</span><span class="info-value" id="detail-h-holiday" style="color:var(--heart-red);"></span></li>
+                    <li class="info-item"><span class="info-label">링크</span><div class="link-group" id="detail-h-links"></div></li>
+                </ul>
+
+                <div class="detail-action-bar">
+                    <button class="detail-action-btn" style="background:var(--bg-light); color:var(--primary-dark);" onclick="showToast('전화 연결 중...')"><span class="material-symbols-outlined">call</span> 전화하기</button>
+                    <button class="detail-action-btn" id="detail-h-booking-btn" style="background:var(--primary-yellow); color:var(--primary-dark);"></button>
+                </div>
+
+                <div class="map-area">
+                    <span class="material-symbols-outlined" style="font-size:32px;">map</span>
+                    지도를 불러오고 있습니다...
+                </div>
+
+                <div class="review-section">
+                    <div class="review-header">방문자 리뷰</div>
+                    <div id="detail-h-review-list"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- [서브 페이지] 나의 예약 관리 -->
+    <section id="page-my-bookings" class="sub-page">
+        <div class="sub-header"><div class="sub-header-left"><button class="back-btn" onclick="closeSubPage()"><span class="material-symbols-outlined">arrow_back</span></button><h2>나의 예약 관리</h2></div></div>
+        <div class="sub-tabs"><div class="sub-tab-item active" onclick="switchBookingTab(0, this)">다녀온 곳</div><div class="sub-tab-item" onclick="switchBookingTab(1, this)">예약내역</div><div class="sub-tab-item" onclick="switchBookingTab(2, this)">즐겨찾기</div></div>
+        <div class="sub-content">
+            <div class="tab-panel active" id="tab-visited">
+                <div class="list-item"><div class="list-item-info"><h4>강남 플러스 동물병원</h4><p>최근 방문: 2월 28일</p></div><button class="event-btn" style="background:var(--primary-yellow); color:var(--primary-dark);">재예약</button></div>
+                <div class="list-item"><div class="list-item-info"><h4>뽀송 애견미용 살롱</h4><p>최근 방문: 1월 15일</p></div><button class="event-btn" style="background:var(--primary-yellow); color:var(--primary-dark);">재예약</button></div>
+            </div>
+            <div class="tab-panel" id="tab-reservations">
+                <div class="list-item"><div class="list-item-info"><h4>몽글 펫 아카데미</h4><p>3월 25일 확정 • 초코</p></div><span class="status-tag complete">예약 확정</span></div>
+                <div class="list-item"><div class="list-item-info"><h4>역삼 24시 메디컬센터</h4><p>4월 02일 대기 • 나비</p></div><span class="status-tag waiting">예약 대기</span></div>
+            </div>
+            <div class="tab-panel" id="tab-favorites-list">
+                <div id="integratedFavoriteContainer"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- [서브 페이지] 반려동물 상세 -->
+    <section id="page-pet-detail" class="sub-page">
+        <div class="sub-header">
+            <div class="sub-header-left"><button class="back-btn" onclick="closeSubPage()"><span class="material-symbols-outlined">arrow_back</span></button><h2>반려동물 정보</h2></div>
+            <button class="event-btn" id="editBtn" onclick="toggleEditMode()" style="background:var(--bg-light); color:var(--primary-dark);">수정</button>
+        </div>
+        <div class="sub-content">
+            <div class="pet-detail-card">
+                <img src="" id="detail-img" class="detail-pet-img">
+                <h3 id="detail-title-name" style="font-size:22px; font-weight:800; color:var(--primary-dark);">이름</h3>
+                <div style="text-align:left; margin-top:32px;">
+                    <div class="info-item"><span class="info-label">이름</span><b class="view-mode" id="view-name"></b><input type="text" class="edit-input edit-mode hidden-mode" id="edit-name"></div>
+                    <div class="info-item"><span class="info-label">품종</span><b class="view-mode" id="view-breed"></b><input type="text" class="edit-input edit-mode hidden-mode" id="edit-breed"></div>
+                    <div class="info-item"><span class="info-label">나이</span><b class="view-mode" id="view-age"></b><input type="text" class="edit-input edit-mode hidden-mode" id="edit-age"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- [서브 페이지] 즐겨찾기 (독립) -->
+    <section id="page-favorite" class="sub-page"><div class="sub-header"><div class="sub-header-left"><button class="back-btn" onclick="closeSubPage()"><span class="material-symbols-outlined">arrow_back</span></button><h2>나의 즐겨찾기</h2></div></div><div class="sub-content" id="standaloneFavoriteContainer"></div></section>
+
+    <!-- 위치 설정 모달 -->
+    <div id="locationModal" class="modal-overlay" onclick="closeModal('locationModal')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div style="padding:20px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
+                <h3 style="font-size:18px; font-weight:800;">동네 설정</h3>
+                <button onclick="closeModal('locationModal')" style="border:none; background:none; font-size:24px; color:#999; cursor:pointer;">✕</button>
+            </div>
+            <div style="padding:20px;">
+                <div style="padding:15px; border-bottom:1px solid #f9f9f9; cursor:pointer; font-weight:700;" onclick="setLoc('강남구 역삼동')">📍 현재 위치 (역삼동)</div>
+                <div style="padding:15px; border-bottom:1px solid #f9f9f9; cursor:pointer; color:#999;" onclick="setLoc('서초구 서초동')">서초구 서초동</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 하단 네비게이션 (대메뉴) -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" onclick="navTo(this)"><span class="material-symbols-outlined">home</span><span>홈</span></div>
+        <div class="nav-item" onclick="showToast('예약 메뉴 준비 중')"><span class="material-symbols-outlined">calendar_month</span><span>예약</span></div>
+        <div class="nav-item" onclick="showToast('쇼핑 메뉴 준비 중')"><span class="material-symbols-outlined"> mode_heat</span><span>핫딜</span></div>
+        <div class="nav-item" onclick="showToast('마이페이지 준비 중')"><span class="material-symbols-outlined">person</span><span>마이</span></div>
+    </nav>
+
+    <div class="toast" id="toast">알림</div>
+</div>
+
+</body>
+</html>
