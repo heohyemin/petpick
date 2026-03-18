@@ -17,11 +17,12 @@
 
 <body>
 
-<!-- 스플래시 화면 -->
+<!-- 스플래시 화면 
 <div class="splash-screen" id="splashScreen">
     <div style="font-size: 40px; margin-bottom: 10px;">🐾</div>
     <div style="font-weight: 800; font-size: 24px;">펫픽</div>
 </div>
+-->
 
 <div class="app-container">
     <!-- 헤더 -->
@@ -209,7 +210,8 @@
         <div class="nav-item active" onclick="navTo(this)"><span class="material-symbols-outlined">home</span><span>홈</span></div>
         <div class="nav-item" onclick="showToast('예약 메뉴 준비 중')"><span class="material-symbols-outlined">calendar_month</span><span>예약</span></div>
         <div class="nav-item" onclick="showToast('쇼핑 메뉴 준비 중')"><span class="material-symbols-outlined"> mode_heat</span><span>핫딜</span></div>
-        <div class="nav-item" onclick="showToast('마이페이지 준비 중')"><span class="material-symbols-outlined">person</span><span>마이</span></div>
+        <div class="nav-item" onclick="showToast('마이페이지 준비 중')"><span class="material-symbols-outlined">person</span><span>내정보</span></div>
+        <div class="nav-item" onclick="openKakaoT()"><span class="material-symbols-outlined">local_taxi</span><span>펫택시</span></div>
     </nav>
 
     <div class="toast" id="toast">알림</div>

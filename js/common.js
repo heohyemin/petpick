@@ -51,7 +51,7 @@ function openHospitalDetail(id) {
     }
 
     const rList = document.getElementById('detail-h-review-list');
-    rList.innerHTML = h.reviewList.map(r => `<div class="review-card"><div class="review-user"><span class="user-name">${r.user}</span><span style="color:var(--star-yellow); font-weight:700;">★ ${r.star}</span></div><p class="review-content">${r.text}</p></div>`).join('');
+    rList.innerHTML = h.reviewList.map(r => `<div class="review-card"><div class="review-user"><span class="user-name">${r.user}</span><span style="color:var(--star-yellow); font-weight:700; font-size:12px;">★ ${r.star}</span></div><p class="review-content">${r.text}</p></div>`).join('');
     
     openSubPage('hospital-detail');
     document.querySelector('#page-hospital-detail .sub-content').scrollTop = 0;
@@ -130,3 +130,37 @@ function updateAdUI() { const s = document.getElementById('adSlider'); const ds 
 function initAdSwipe() { const c = document.getElementById('adSliderContainer'); let sx = 0; if(!c) return; c.addEventListener('touchstart', (e) => sx = e.touches[0].clientX, {passive:true}); c.addEventListener('touchend', (e) => { const diff = sx - e.changedTouches[0].clientX; if (Math.abs(diff) > 50) { currentAdIndex = (diff > 0 ? (currentAdIndex + 1) : (currentAdIndex - 1 + 3)) % 3; updateAdUI(); } }, {passive:true}); }
 function initDragScroll() { document.querySelectorAll('.drag-scrollable').forEach(a => { let id = false; let sx, sl; a.onmousedown = (e) => { id = true; sx = e.pageX - a.offsetLeft; sl = a.scrollLeft; }; a.onmouseleave = () => id = false; a.onmouseup = () => id = false; a.onmousemove = (e) => { if(!id) return; e.preventDefault(); const w = (e.pageX - a.offsetLeft - sx) * 2; a.scrollLeft = sl - w; }; }); }
 function initPetCardSwitch() { const cards = document.querySelectorAll('.pet-card'); const observer = new IntersectionObserver((e) => e.forEach(en => en.target.classList.toggle('active-pet', en.isIntersecting)), {root:document.getElementById('petScrollArea'), threshold:0.6}); cards.forEach(c => observer.observe(c)); }
+
+
+/* 카카오 택시 */
+function openKakaoT() {
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    
+    const appScheme = "kakaot://"; // 카카오T 앱 실행 주소
+    const playStore = "https://play.google.com/store/apps/details?id=com.kakao.taxi";
+    const appStore = "https://apps.apple.com/kr/app/id981110467";
+
+    if (!isIOS && !isAndroid) {
+        // PC 브라우저인 경우 안내 메시지
+        showToast("모바일 기기에서 앱을 실행할 수 있습니다.");
+        window.open("https://t.kakao.com/", "_blank"); // 웹 사이트 열기
+        return;
+    }
+
+    const startAt = +new Date();
+    
+    // 앱 실행 시도
+    location.href = appScheme;
+
+    // 1.5초 후에도 화면 변화가 없다면(앱 미설치 시) 스토어로 이동
+    setTimeout(function() {
+        if (+new Date() - startAt < 2000) {
+            if (isIOS) {
+                location.href = appStore;
+            } else {
+                location.href = playStore;
+            }
+        }
+    }, 1500);
+}
